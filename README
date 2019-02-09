@@ -1,0 +1,110 @@
+# Step1: environment
+
+## Download Go
+```
+https://golang.org/dl/
+```
+
+## Install Go tools
+```
+$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+$ export PATH=$PATH:/usr/local/go/bin
+```
+
+## Test installation
+```
+package main
+
+import "fmt"
+
+func main() {
+        fmt.Printf("hello, world\n")
+}
+```
+```
+$ go build
+$ ./hello
+```
+
+## Uninstall
+```
+https://golang.org/doc/install#uninstall
+```
+
+---
+
+# Step2: how to write go code
+```
+https://golang.org/doc/code.html
+```
+
+代码结构内容有 通常惯例、workspace、GOPATH、Import路径、第一个程序、第一个库、包名、测试、远程包。
+
+## GOPATH 环境变量
+```
+GOPATH 环境变量用途是寻找 GO 代码，通过 `go env GOPATH` 查看，默认值为 $HOME/go
+
+如果要使用 $GOPATH，需要先执行 `export GOPATH=$(go env GOPATH)`
+
+自定义 GOPATH 的方法：https://golang.org/wiki/SettingGOPATH，其实就是指定目录 `export GOPATH=/xxx/xxx`
+
+workspace 的子目录 bin/ 出于便利可设置到 PATH 环境变量 `export PATH=$PATH:$(go env GOPATH)/bin`
+```
+
+## Import 路径
+```
+import 路径作为一个包的唯一标识，建议使用个人账户相关作为基础路径，如 $GOPATH/src/github.com/username
+
+export GOPATH=/Users/xxxx/go-lab
+mkdir -p $GOPATH/src/github.com/farwish
+mkdir $GOPATH/src/github.com/farwish/hello # 包目录
+```
+
+## 第一个程序
+```
+vi $GOPATH/src/github.com/farwish/hello/hello.go
+# 会从 GOPATH 的 src 目录下找，install 不加路径默认指向当前目录，install 会在 GOPATH 的 bin 目录生成可执行二进制文件 $GOPATH/bin/hello
+go install github.com/farwish/hello
+```
+
+## 第一个库
+```
+mkdir $GOPATH/src/github.com/farwish/stringutil # 包目录
+# build 不会生成文件，编译的包 保存在本地缓存中，可以在 hello.go 中 import 使用，然后重新 go install github.com/farwish/hello
+go build github.com/farwish/stringutil
+go install github.com/farwish/hello
+```
+
+```
+# 目录结构
+bin/
+    hello                 # command executable
+src/
+    github.com/user/
+        hello/
+            hello.go      # command source
+        stringutil/
+            reverse.go    # package source
+```
+
+## 包名
+```
+go 源文件的第一句必须是 `package xxxname`。
+
+go 的惯例是 import 路径的最后一个元素作为包名。
+
+可执行命令必须总是使用包名 main。
+
+二进制中引用的所有包的包名不需要唯一，import 路径（包全名）唯一即可。
+```
+
+## 测试
+```
+https://golang.org/doc/code.html#Testing
+```
+
+## 远程包
+```
+$ go get github.com/golang/example/hello
+$ $GOPATH/bin/hello
+```
