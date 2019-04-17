@@ -46,7 +46,8 @@ GOPATH 环境变量用途是寻找 GO 代码，通过 `go env GOPATH` 查看，�
 
 但是系统的 $GOPATH 是空的，如果要使用 $GOPATH，需要先执行 `export GOPATH=$(go env GOPATH)`   
 
-自定义 GOPATH 的方法：https://golang.org/wiki/SettingGOPATH，其实就是指定目录 `export GOPATH=/xxx/xxx`
+自定义 GOPATH 的方法：https://golang.org/wiki/SettingGOPATH，
+其实就是指定目录 `export GOPATH=/xxx/xxx`
 ( `如果当前所在目录就是go项目目录，那么就是 `export GOPATH=$(pwd)` )
 
 workspace 的子目录 bin/ 出于便利可设置到 PATH 环境变量 `export PATH=$PATH:$(go env GOPATH)/bin`
@@ -165,3 +166,19 @@ src/
             reverse.go              # package source
             reverse_test.go         # test source
 ```
+
+# FAQ
+
+## 如何下载 golang.org 的包
+
+方式1.
+```
+# Go包管理器 https://github.com/gpmgo/gopm
+$ go get -u -v github.com/gpmgo/gopm
+$ ./bin/gopm get -u -v github.com/gin-gonic/gin
+```
+
+方式2.
+每次都要指定完整路径, 比如官网包在github的镜像, go get -u github.com/golang/net/http
+
+

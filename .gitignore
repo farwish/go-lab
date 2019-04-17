@@ -1,2 +1,6 @@
 .DS_Store
+.cache/*
 bin/*
+src/*/*
+!src/github.com
+!src/github.com/farwish
