@@ -47,8 +47,7 @@ GOPATH 环境变量用途是寻找 GO 代码，通过 `go env GOPATH` 查看，�
 但是系统的 $GOPATH 是空的，如果要使用 $GOPATH，需要先执行 `export GOPATH=$(go env GOPATH)`   
 
 自定义 GOPATH 的方法：https://golang.org/wiki/SettingGOPATH，
-其实就是指定目录 `export GOPATH=/xxx/xxx`
-( `如果当前所在目录就是go项目目录，那么就是 `export GOPATH=$(pwd)` )
+其实就是指定目录 `export GOPATH=/xxx/xxx`，( 如果当前所在目录就是go项目目录，那么就是 `export GOPATH=$(pwd)` )
 
 workspace 的子目录 bin/ 出于便利可设置到 PATH 环境变量 `export PATH=$PATH:$(go env GOPATH)/bin`
 ```
@@ -65,6 +64,7 @@ $ mkdir $GOPATH/src/github.com/farwish/hello # 包目录
 ## 第一个程序
 ```
 $ vi $GOPATH/src/github.com/farwish/hello/hello.go
+
 # install 不加路径默认指向当前目录，会从 GOPATH 的 src 目录下找，install 会在 GOPATH 的 bin 目录生成可执行二进制文件 $GOPATH/bin/hello
 $ go install github.com/farwish/hello
 ```
@@ -73,6 +73,7 @@ $ go install github.com/farwish/hello
 ```
 # 包目录
 $ mkdir $GOPATH/src/github.com/farwish/stringutil 
+
 # build 不会生成文件，编译的包 保存在本地缓存中，可以在 hello.go 中 import 使用，然后重新 go install github.com/farwish/hello
 # 要编译这个包用 go build github.com/farwish/stringutil
 # 安装 hello 程序
