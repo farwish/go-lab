@@ -1,6 +1,9 @@
 .DS_Store
 .cache/*
+.vendor
 bin/*
-src/*/*
-!src/github.com
+src/github.com/
 !src/github.com/farwish
+pkg/
+go.mod
+go.sum

@@ -176,10 +176,17 @@ src/
 ```
 # Go包管理器 https://github.com/gpmgo/gopm
 $ go get -u -v github.com/gpmgo/gopm
-$ ./bin/gopm get -u -v github.com/gin-gonic/gin
+$ ./bin/gopm get -u -v github.com/gin-gonic/gin # 不加-g参数会下载到$GOPATH位置的.vendor/下面
 ```
 
 方式2.
-每次都要指定完整路径, 比如官网包在github的镜像, go get -u github.com/golang/net/http
+每次都要指定完整路径, 比如官网包在github的镜像, go get -u github.com/golang/net/http（有依赖包时无法解决问题）
 
 
+# 总结
+```
+export GOPATH=/home/wc/go-lab
+go get -u -v github.com/gpmgo/gopm
+export PATH=$PATH:/home/wc/go-lab/bin
+gopm get -g -u -v github.com/gin-gonic/gin # -g 会安装到 GOPATH 目录，不加会安装到 .vendor 目录
+```
