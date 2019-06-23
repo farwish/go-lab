@@ -10,13 +10,14 @@ first.go
 【语言变量】
 var.go
 
-【语言常量】
-const.go
-
 【变量作用域】
 var-scope.go
 
+【语言常量】
+const.go
+
 【数组】
+array.go
 
 【指针】
 
