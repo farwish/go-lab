@@ -43,7 +43,7 @@ func main() {
     }
     alen := len(a)
 
-    for k :=0; k < alen; k++ {
+    for k := 0; k < alen; k++ {
         for l := 0; l < len(a[k]); l++ {
             fmt.Printf("a[%d][%d]=%d\n", k, l, a[k][l])
             // Output:
