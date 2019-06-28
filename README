@@ -3,13 +3,21 @@
 ## Download Go
 ```
 https://golang.org/dl/
+https://studygolang.com/dl
 ```
 
 ## Install Go tools
 ```
-$ tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
-$ export PATH=$PATH:/usr/local/go/bin
+$ sudo  tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
 ```
+
+/etc/bash.bashrc || /etc/profile 加入:
+```
+export GOPATH=/home/wc/go-lab
+export GO111MODULE=on
+export GOPROXY=https://goproxy.io
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:/usr/local/protobuf/bin
+``````
 
 ## Test installation
 ```

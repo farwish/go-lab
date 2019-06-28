@@ -5,7 +5,7 @@
 # @author farwish <farwish@foxmail.com>
 
 
-/etc/bash.bashrc 加入:
+/etc/bash.bashrc || /etc/profile 加入:
 ```
 export GOPATH=/home/wc/go-lab
 export GO111MODULE=on
