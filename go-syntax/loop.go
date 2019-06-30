@@ -11,8 +11,9 @@ func main() {
     greeting := "你好"
     fmt.Printf("'%s' 长度为 %d\n", greeting, utf8.RuneCountInString(greeting));
 
-    // for.. range 遍历字符串，输出字符
+    // for range 遍历字符串，输出字符
     city := "乌鲁木齐"
+    // 注意：如果for后面只带一个，那么代表的是键
     for _, value := range city {
         v := fmt.Sprintf("%c", value)
         fmt.Println(v)

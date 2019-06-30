@@ -10,6 +10,11 @@ type Circle struct {
 }
 
 func main() {
+    // 延迟执行函数
+    defer func() {
+        fmt.Println("main func execute finished")
+    }()
+
     // 值传递
     fmt.Println(max(1,2)) // 2
 
@@ -35,14 +40,21 @@ func main() {
     fmt.Println(number())   // 2
     fmt.Println(number())   // 3
 
-    // 函数方法
+    // 函数方法, 只能给 type 定义的类型用
     var c1 Circle
     c1.radius = 10.00
     fmt.Println("圆的面积 = ", c1.getArea())
+
+    // 可变参数,只能是最后一个参数
+    changeAble("ha", 1, 2, 3, 4)
 }
 
 // func 声明函数, 参数列表和返回类型可选, 函数体
 func max(num1, num2 int) int {
+    defer func() {
+        fmt.Println("max func execute finished")
+    }()
+
     var result int
     if (num1 > num2) {
         result = num1
@@ -54,16 +66,28 @@ func max(num1, num2 int) int {
 
 // 多返回值
 func both(a, b string) (string, string) {
+    defer func() {
+        fmt.Println("both func execute finished")
+    }()
+
     return a, b
 }
 
-// 引用传递
+// 引用传递(指针参数)
 func refPrintln(x *string, y *string) {
+    defer func() {
+        fmt.Println("refPrintln func execute finished")
+    }()
+
     fmt.Println(*x, *y);
 }
 
 // 返回函数类型
 func getSequence() func() int {
+    defer func() {
+        fmt.Println("refPrintln func execute finished")
+    }()
+
     i := 0
     return func() int {
         i++
@@ -72,6 +96,26 @@ func getSequence() func() int {
 }
 
 // getArea 属于 Circle 类型对象中的方法
+// 只能给 type 定义的类型用
+// 更多关于结构类型内容见 struct.go
 func (c Circle) getArea() float64 {
+    defer func() {
+        fmt.Println("getArea func execute finished")
+    }()
+
     return 3.14 * c.radius * c.radius
+}
+
+// 可变参数,只能是最后一个参数
+func changeAble(str string, numbers... int) int {
+    defer func() {
+        fmt.Println("changeAble func execute finished")
+    }()
+
+    var sum int
+    for _, value := range numbers {
+        sum += value
+    }
+    fmt.Printf("str is %s, 可变参数列表 sum = %d\n", str, sum)
+    return sum
 }

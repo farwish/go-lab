@@ -7,15 +7,20 @@ import (
 func main() {
     // 初始化集合的方式
     countryCityMap := make(map[string]string)
+    fmt.Printf("countryCityMap type is %T\n", countryCityMap)
+    fmt.Printf("countryCityMap value is %v\n", countryCityMap)
+    if (countryCityMap != nil) {
+        fmt.Println("countryCityMap is not nil")
+    }
     countryCityEnMap := map[string]string {"Italy": "Rome", "France": "Paris"}
 
     // 插入键值
     countryCityMap["Italy"] = "罗马"
     countryCityMap["France"] = "巴黎"
 
-    // 输出集合的值
-    for country := range countryCityMap {
-        fmt.Println(country)
+    // 输出集合的键
+    for countryEn := range countryCityMap {
+        fmt.Println(countryEn)
     }
 
     // 查看集合中元素是否存在
@@ -23,9 +28,9 @@ func main() {
     fmt.Println(city) // 巴黎
     fmt.Println(ok)   // true
 
-    icity, iok := countryCityMap["USA"]
+    icity, isok := countryCityMap["USA"]
     fmt.Println(icity) // ""
-    fmt.Println(iok)   // false
+    fmt.Println(isok)  // false
 
     // 删除集合的元素 delete()
     delete(countryCityEnMap, "Italy")

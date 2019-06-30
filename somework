@@ -71,6 +71,155 @@ H环境变量以使用 protoc 命令
     $ go run main.go
     ```
 
+【consul】
+1.二进制包安装:https://learn.hashicorp.com/consul/getting-started/install
+
+2.Consul Agent：https://learn.hashicorp.com/consul/getting-started/agent
+    ```
+    # 启动
+    $ consul agent -dev
+
+    # 查看集群节点的3种方式
+    $ consul members
+    $ curl localhost:8500/v1/catalog/nodes # 使用HTTP-API查看
+    $ dig @127.0.0.1 -p 8600 xxxxx # 使用DNS接口查看
+
+    # 停止
+    $ ctrl-c 优雅停止agetn
+    ```
+
+3.注册服务：https://learn.hashicorp.com/consul/getting-started/services
+
+    1> 定义一个服务：可以通过服务定义或者调用 HTTP API.
+    ```
+    # Unxi系统一般惯例是在像 /etc/consul.d 的目录中放置一系列配置文件
+    $ mkdir ./consul.d
+
+    # 假设有一个名为 web 的服务，写一个服务定义的配置文件
+    $ echo '{"service": {"name": "web", "tags": ["rails"], "port": 80}}' > ./consul.d/web.json
+
+    # 重启agent
+    $ consul agent -dev -config-dir=./consul.d
+
+    # 注意：生产环境需要启动服务健康检测并在80端口启动健康服务.
+    ```
+
+    2> 查询服务
+    一旦 agent 已启动并且服务已同步，可以使用 DNS API 或者 HTTP API 查询服务.
+    ```
+    # DNS API
+    $ dig @127.0.0.1 -p 8600 web.service.consul
+
+    # HTTP API
+    $ curl http://localhost:8500/v1/catalog/service/web
+    ```
+
+    3> 更新服务
+    服务定义通过修改配置文件并发送 SIGHUP 到 agent 来更新. 这让你不用停机和不可用来更新服务.
+    可选的，用 HTTP API 动态添加，删除，修改服务.
+
+    4> 摘要
+    配置一个单节点和注册一个服务.
+    其它的服务定义的字段可在API文档找到：https://www.consul.io/api/agent/service.html
+
+4. Consul UI
+    1> 启动UI
+    ```
+    # 启动后访问 http://localhost:8500/ui，此时UI是不安全的，不需要验证就能访问
+    $ consul agent -dev -ui -config-dir=./consul.d
+    ```
+
+    2> 监控 agent 和 service，查看 services 和 nodes
+    3> 管理 Key-Value Store
+    4> 服务安全：
+    配置 ACLs, https://learn.hashicorp.com/consul/security-networking/production-acls
+    限制服务间通信使用 intentions.
+
+    5> UI 支持的操作
+    Services        Read
+    Nodes           Read
+    Key/Value       Create, Read, Update, Delete
+    Intentions      Create, Read, Update, Delete
+    ACLs            Create, Read, Update, Delete
+
+5. Connect
+    1> 启动连接未知的 service
+    ```
+    # 接受TCP连接并回显发送过来的数据
+    $ socat -v TCP-LISTEN:8181,fork exec:"/bin/cat"
+
+    # 连接验证
+    $ nc 127.0.0.1 8181
+    ```
+
+    2> 使用 Consul 和 Connect 注册服务
+    ```
+    $ cat <<EOF | tee ./consul.d/socat.json
+    {
+      "service": {
+        "name": "socat",
+        "port": 8181,
+        "connect": { "sidecar_service": {} }
+      }
+    }
+    EOF
+
+    $ consul reload
+    ```
+    与前面的配置不同之处是以 "connect" 开头. 空的配置用于通知 Consul 为这个进程注册一个 sidecar proxy.
+    proxy 进程代表指定的服务. 它接受入站连接到一个动态分配的端口，验证和授权 TLS 连接，并 proxy 将标准 TCP 连接返回给进程.
+
+    这里的 sidecar 服务注册只是告诉 Consul 应该运行一个 proxy. Consul 不会真正为你运行一个 proxy 进程.
+    我们需要在其它终端中启动 proxy 进程.
+
+    ```
+    $ consul connect proxy -sidecar-for socat
+    ```
+
+    3> 连接到 service
+    使用 consul connect proxy 命令配置和运行一个本地 proxy 来代表一个服务，下面是代表 "web".
+    我们请求一个 upstream "socat" 端口 9191.
+    通过这个配置，所有到 9191 的连接会为 "socat" 终端执行服务发现，并建立到服务 "web" 共同的 TLS 连接.
+
+    ```
+    $ consul connect proxy -service web -upstream socat:9191
+    ```
+
+    ```
+    # 代理间的连接现在是加密的和授权的
+    $ nc 127.0.0.1 9191
+    ```
+
+    3> Intentions 控制访问
+    ```
+    # 拒绝从 web 到 socat 的访问
+    $ consul intention create -deny web socat
+
+    # 删除 intention
+    $ consul intention delete web socat
+    ```
+
+6. Consul Custer
+
+7. 注册健康检测
+
+8. KV Data
+
+9. 部署
+
+
+consul 默认端口:
+Use	Default Ports
+DNS: The DNS server (TCP and UDP)	8600
+HTTP: The HTTP API (TCP Only)	8500
+HTTPS: The HTTPs API	disabled (8501)*
+gRPC: The gRPC API	disabled (8502)*
+LAN Serf: The Serf LAN port (TCP and UDP)	8301
+Wan Serf: The Serf WAN port TCP and UDP)	8302
+server: Server RPC address (TCP Only)	8300
+Sidecar Proxy Min: Inclusive min port number to use for automatically assigned sidecar service registrations.	21000
+Sidecar Proxy Max: Inclusive max port number to use for automatically assigned sidecar service registrations.	21255
+
 
 FAQ
 

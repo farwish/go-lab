@@ -11,6 +11,7 @@ func main() {
     // 初始化数组: 含元素个数
     var balance = [5]int {1, 3, 5, 7, 9}
     balanceLen := len(balance)
+    fmt.Printf("arr type is %T\n", arr) // [5]string
 
     // 初始化数组: 不含元素个数,自动计算
     var balance2 = [...]int {2, 4, 6, 8, 10}

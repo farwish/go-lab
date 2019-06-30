@@ -14,9 +14,11 @@ func main() {
     var card = "card"
     var card1, card2 = 123, "card2"
 
-    // 3.简短形式(推荐)，省略 var 不带声明, 注意 := 左侧如果没有声明新的变量就产生编译错误
+    // 3.简短形式(推荐)，省略 var 不带声明,
+    // 注意 := 左侧如果不是新的变量就产生编译错误
+
     // 不带声明格式的只能在函数体中出现
-    // 等同于 var sex1 int = 1
+    // 等同于 var sex = 0
     sex := 0
     sex1, sex2 := 1, 2
 
@@ -33,7 +35,7 @@ func main() {
     var name string             // 字符串型
     var a *int                  // 指针类型(Pointer)
     var b []int                 // 数组类型
-    var c map[string] int       // Map 类型
+    var c map[string] int       // Map 集合类型(key类型和value类型),不初始化(make)为 nil map, 不能存放键值对
     var d chan int              // Channel 类型
     var e func(string) int      // 函数类型
     var f error                 // 接口类型(interface)

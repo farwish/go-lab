@@ -20,6 +20,8 @@ func main() {
     }
 }
 
+// 支持返回错误信息的函数
+// 有错误时 err != nil
 func Sqrt(f float64) (float64, error) {
     if f < 0 {
         return 0, errors.New("error:f < 0")

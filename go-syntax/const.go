@@ -6,7 +6,7 @@ import (
 )
 
 // 显式类型定义
-const A string = "AA"
+const A string = "AAAAA"
 // 隐式类型定义
 const B = "BB"
 // 常量用作枚举
@@ -33,7 +33,7 @@ func main() {
     fmt.Println(A)
     fmt.Println(B)
     fmt.Println(Male)
-    fmt.Println(unsafe.Sizeof(A)) // "AA"=16(byte)
+    fmt.Println(unsafe.Sizeof(A)) // 16
 
     fmt.Println(a) // 0
     fmt.Println(b) // 1
