@@ -4,6 +4,7 @@
 ```
 https://golang.org/dl/
 https://studygolang.com/dl
+http://localhost:6060/dl
 ```
 
 ## Install Go tools
@@ -19,6 +20,11 @@ export GOPROXY=https://goproxy.io
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:/usr/local/protobuf/bin
 ``````
 
+## Local Document
+```
+$ godoc # http://localhost:6060/
+```
+
 ## Test installation
 ```
 package main
@@ -26,17 +32,18 @@ package main
 import "fmt"
 
 func main() {
-        fmt.Printf("hello, world\n")
+    fmt.Printf("hello, world\n")
 }
 ```
+
 ```
-$ go build  # 会根据 GOPATH 路径来找源文件
-$ ./hello
+$ go run hello.go  # 会根据 GOPATH 路径来找源文件
 ```
 
 ## Uninstall
 ```
 https://golang.org/doc/install#uninstall
+http://localhost:6060/doc/install#uninstall
 ```
 
 ---
@@ -44,6 +51,7 @@ https://golang.org/doc/install#uninstall
 # Step2: how to write go code
 ```
 https://golang.org/doc/code.html
+http://localhost:6060/doc/code.html
 ```
 
 代码结构内容有 通常惯例、workspace、GOPATH、Import路径、第一个程序、第一个库、包名、测试、远程包。
