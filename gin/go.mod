@@ -1,4 +1,4 @@
-module /home/ubuntu/go-lab/gin
+module github.com/farwish/go-lab/gin
 
 go 1.12
 
