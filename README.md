@@ -4,7 +4,6 @@
 ```
 https://golang.org/dl/
 https://studygolang.com/dl
-http://localhost:6060/dl
 ```
 
 ## Install Go tools
