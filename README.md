@@ -1,25 +1,54 @@
 # Step1: environment
 
-## Download Go
-```
-https://golang.org/dl/
-https://studygolang.com/dl
-```
+## Download the Go distribution & Install Go tools
 
-## Install Go tools
+Download distribution from https://golang.org/dl/ or https://studygolang.com/dl
+
+Install step follow https://golang.org/doc/install
+
+*nix 平台存档包安装如下：
 ```
 $ sudo  tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
 ```
+图形化安装包则直接点击安装.
 
-/etc/bash.bashrc || /etc/profile 加入:
+Set new PATH environment variable for bin.
+~/.bash_profile || /etc/bash.bashrc || /etc/profile || ~/.zshrc:
 ```
-export GOPATH=/home/wc/go-lab
-export GO111MODULE=on
-export GOPROXY=https://goproxy.io
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:/usr/local/protobuf/bin
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+```
+
+Set workspace directory by setting GOPATH environment variable.
+https://github.com/golang/go/wiki/SettingGOPATH
+```
+export GOPATH=$HOME/go
 ``````
 
+Enforce it
+```
+$ source ~/.zshrc
+```
+
+Other go environment variable can also be set, see `go env`.
+
+## A Global Proxy for Go Modules 
+
+```
+# Enable the go modules feature
+export GO111MODULE=on
+
+# Set the GOPROXY environment variable
+export GOPROXY=https://goproxy.io
+```
+
 ## Local Document
+
+If godoc command is not in /usr/local/go/bin, run:
+```
+$ go get golang.org/x/tools/cmd/godoc
+```
+
+Then `godoc` will be install in $GOPATH/bin/godoc
 ```
 $ godoc # http://localhost:6060/
 ```
