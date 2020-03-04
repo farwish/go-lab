@@ -4,23 +4,25 @@
 
 Download distribution from https://golang.org/dl/ OR https://studygolang.com/dl
 
-Install step see [install](https://golang.org/doc/install) OR doing follow steps.
+Install steps see [install](https://golang.org/doc/install) OR doing below steps.
 
 *nix platform archive file install:
 ```
 $ sudo  tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
 ```
 
-Set new PATH environment variable for bin.(~/.zshrc || ~/.bash_profile || /etc/bash.bashrc || /etc/profile) :
-```
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-```
+Set environment variable. (in ~/.zshrc || ~/.bash_profile || /etc/bash.bashrc || /etc/profile)
 
 Set workspace directory by setting GOPATH environment variable.
 https://github.com/golang/go/wiki/SettingGOPATH
 ```
 export GOPATH=$HOME/go
 ``````
+
+Set new PATH environment variable for bin.
+```
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+```
 
 Enforce it
 ```
