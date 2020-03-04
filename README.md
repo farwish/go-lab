@@ -2,18 +2,16 @@
 
 ## Download the Go distribution & Install Go tools
 
-Download distribution from https://golang.org/dl/ or https://studygolang.com/dl
+Download distribution from https://golang.org/dl/ OR https://studygolang.com/dl
 
-Install step follow https://golang.org/doc/install
+Install step see [install](https://golang.org/doc/install) OR doing follow steps.
 
-*nix 平台存档包安装如下：
+*nix platform archive file install:
 ```
 $ sudo  tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
 ```
-图形化安装包则直接点击安装.
 
-Set new PATH environment variable for bin.
-~/.bash_profile || /etc/bash.bashrc || /etc/profile || ~/.zshrc:
+Set new PATH environment variable for bin.(~/.zshrc || ~/.bash_profile || /etc/bash.bashrc || /etc/profile) :
 ```
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 ```
