@@ -33,6 +33,18 @@ Other go environment variable can also be set, see `go env`.
 
 ## A Global Proxy for Go Modules 
 
+
+Go1.13 and above:
+
+```
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.io,direct
+
+# 设置不走 proxy 的私有仓库，多个用逗号相隔（可选）
+go env -w GOPRIVATE=*.corp.example.com
+```
+
+Go1.12 and below:
 ```
 # Enable the go modules feature
 export GO111MODULE=on
