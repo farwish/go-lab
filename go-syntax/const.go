@@ -29,6 +29,12 @@ const (
     f
 )
 
+const (
+    g = 1 + iota
+    h 
+    i 
+)
+
 func main() {
     fmt.Println(A)
     fmt.Println(B)
@@ -42,4 +48,8 @@ func main() {
     fmt.Println(d) // 0
     fmt.Println(e) // 1
     fmt.Println(f) // 2
+
+    fmt.Println(g) // 1
+    fmt.Println(h) // 2
+    fmt.Println(i) // 3
 }
