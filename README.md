@@ -38,7 +38,7 @@ Go1.13 and above:
 
 ```
 go env -w GO111MODULE=on
-go env -w GOPROXY=https://goproxy.io,direct
+go env -w GOPROXY=https://goproxy.io,direct  OR  (https://goproxy.cn)
 
 # 设置不走 proxy 的私有仓库，多个用逗号相隔（可选）
 go env -w GOPRIVATE=*.corp.example.com
@@ -50,7 +50,7 @@ Go1.12 and below:
 export GO111MODULE=on
 
 # Set the GOPROXY environment variable
-export GOPROXY=https://goproxy.io
+export GOPROXY=https://goproxy.io  OR  (https://goproxy.io)
 ```
 
 ## Local Document
