@@ -50,7 +50,7 @@ Go1.12 and below:
 export GO111MODULE=on
 
 # Set the GOPROXY environment variable
-export GOPROXY=https://goproxy.io  OR  (https://goproxy.io)
+export GOPROXY=https://goproxy.io  OR  (https://goproxy.cn)
 ```
 
 ## Local Document
