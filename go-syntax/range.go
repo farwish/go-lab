@@ -13,7 +13,8 @@ func main() {
         // 如果for后只带一个变量，那么是键
         sum += num
     }
-    fmt.Println("sum =", sum) // sum = 9
+    fmt.Println("sum len", len(nums))  // sum len 3
+    fmt.Println("sum =", sum)          // sum = 9
 
     // range 遍历 map
     kvMap := map[string]string {"a": "apple", "b": "banana"}
