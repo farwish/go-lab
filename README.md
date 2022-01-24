@@ -2,7 +2,7 @@
 
 ## Download the Go distribution & Install Go tools
 
-Download distribution from https://golang.org/dl/ OR https://studygolang.com/dl
+Download distribution from https://golang.google.cn/dl/ OR https://golang.org/dl/ OR https://studygolang.com/dl
 
 Install steps see [install](https://golang.org/doc/install) OR doing below steps.
 
@@ -34,7 +34,7 @@ Other go environment variable can also be set, see `go env`.
 ## A Global Proxy for Go Modules 
 
 
-Go1.13 and above:
+Go1.13 and above for terminal:
 
 ```
 go env -w GO111MODULE=on
@@ -53,6 +53,17 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.io  OR  (https://goproxy.cn)
 ```
 
+Go Modules Proxy for Goland:
+```
+Preference -> Go Modules -> Environment: GOPROXY=https://goproxy.cn
+```
+
+Usage of go.mod file:
+```
+$ go mod init github.com/gopher-lego/ginger
+$ go get -u github.com/gogf/gf
+```
+
 ## Local Document
 
 If godoc command is not in /usr/local/go/bin, run:
@@ -69,10 +80,13 @@ $ godoc # http://localhost:6060/
 ```
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "github.com/gogf/gf"
+)
 
 func main() {
-    fmt.Printf("hello, world\n")
+    fmt.Printf("hello, world\n", fg.VERSION)
 }
 ```
 
