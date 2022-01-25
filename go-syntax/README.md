@@ -24,11 +24,16 @@ const.go
 
 ## 条件语句
 if,
+
 if.. else..,
+
 if.. else if..,
+
 switch(fallthrough)
+
 type-switch
-select
+
+select 【select.go 与 chan.go】
 
 ## 循环与嵌套循环
 loop.go
@@ -38,6 +43,9 @@ func.go
 
 ## 数组
 array.go
+
+## 通道(channel)
+chan.go
 
 ## 指针
 pointer.go
