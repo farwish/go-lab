@@ -23,17 +23,20 @@ const.go
 和C语言一样
 
 ## 条件语句
-if,
+    if,
 
-if.. else..,
+    if.. else..,
+    if.. else if..,
 
-if.. else if..,
+    switch(fallthrough)
 
-switch(fallthrough)
+    type-switch
 
-type-switch
+    select 
 
-select 【select.go 与 chan.go】
+select.go
+
+chan.go
 
 ## 循环与嵌套循环
 loop.go
@@ -53,6 +56,8 @@ pointer.go
 ## 结构体
 struct.go
 
+struct-tag.go
+
 ## 切片
 slice.go
 
@@ -71,3 +76,4 @@ error.go
 ## 并发
 goroutine.go
 
+goroutine-producer-consumer.go
