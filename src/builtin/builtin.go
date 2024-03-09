@@ -1,7 +1,9 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"math/cmplx"
 	"reflect"
 )
 
@@ -52,14 +54,42 @@ func main() {
 	fmt.Println("-------------------------------")
 
 	// new(Type) *Type
-	// 		创建一个指向类型为 Type 的变量的指针
-    i := new(int)
-    *i = 42
-    fmt.Println(*i) 	// 42
+	// 		内置函数，用于分配内存。适用于任何类型Type,然后返回一个指向新分配内存的指针
+	// 		它的第一个参数是一个类型，而不是一个值，返回的值是指向该类型的新分配的零值的指针。
+	myint := new(int)
+	myint_v := reflect.ValueOf(myint)
+	fmt.Println("Type   of myint is:", reflect.TypeOf(myint))	// *int
+	fmt.Println("Kind   of myint is:", myint_v.Kind()) 			// ptr
+	fmt.Println("Value  of myint is:", myint_v)					// 0xc00000a108
+	fmt.Println("Value  of myint ptr is:", *myint)				// 0
+	*myint = 111
+	fmt.Println("Value  of myint ptr is:", *myint)				// 111
 
-    s := new(string)
-    *s = "Hello, World!"
-    fmt.Println(*s) 	// Hello, World!
+	fmt.Println("-------------------------------")
+
+	// complex(r, i FloatType) ComplexType
+	// 		内置的复杂值构造函数，它从两个浮点数值构建一个复数。
+	// 		其中，实部和虚部必须具有相同的大小（float32或float64，或可以分配给它们），
+	// 		并且返回值将是相应的复数类型（float32对应complex64，float64对应complex128）。
+	// 
+	// 创建一个复数6+4i，其中实部和虚部都是float64类型
+	c1 := complex(6.0, 4.0) // c1 的类型是 complex128
+	// 创建一个复数3.5-2.3i，其中实部和虚部都是float32类型
+	c2 := complex(float32(3.5), float32(-2.3)) // c2 的类型是 complex64
+	fmt.Println("c1=",c1, "c2=",c2)
+
+	fmt.Println("-------------------------------")
+
+	// real(c ComplexType) FloatType
+	// 		内置函数，用于返回复数c的实部。 返回值的类型将与c的类型相对应的浮点类型。
+	// imag(c ComplexType) FloatType
+	// 		内置函数，用于返回复数c的虚部。返回值的类型将是与c的类型相对应的浮点数类型。
+	z := cmplx.Sqrt(-1)  // 创建一个复数，例如虚数单位i
+	realPart := real(z)  // 调用real函数获取实部
+	imagPart := imag(z)  // 调用imag函数获取实部
+	fmt.Println("z=", z)
+	fmt.Println("Real part of z:", realPart)	// Real part of z: 0
+	fmt.Println("Imag part of z:", imagPart)	// Imag part of z: 1
 
 	fmt.Println("-------------------------------")
 
@@ -107,6 +137,24 @@ func main() {
 
 	fmt.Println("-------------------------------")
 
+	// errors.go
+	// 	errors.New 该函数名为New，它返回一个格式化为给定文本的错误值。即使文本相同，每次调用New也会返回一个不同的错误值。
+	// 	errors.Is 函数用于比较两个错误是否相等，它会返回一个布尔值
+	//  errors.Error 函数用于获取错误的文本信息
+	var ErrUnknown = errors.New("Unknown error")
+	fmt.Println(ErrUnknown.Error())
+	testerr := errors.New("Test error")
+	if testerr != nil {
+		fmt.Println(testerr.Error())
+	}
+	if errors.Is(testerr, errors.ErrUnsupported) {  // 判断某个返回的 error 是否是 ErrUnsupported
+		fmt.Println("testerr is ErrUnsupported")
+	} else {
+		fmt.Println("testerr is not ErrUnsupported")
+	}
+
+	fmt.Println("-------------------------------")
+
 	// panic(v any)
 	// 		在当前的 goroutine 中停止正常的执行。
 	// 		当一个函数F调用 panic 时，F的正常执行会立即停止。
@@ -122,6 +170,16 @@ func main() {
 
 	// recover() any
 	// 		它允许程序管理一个发生 panic 的 goroutine 的行为。
-	// 		在一个延迟执行的函数（而不是由它调用的任何函数）内部执行 recover 调用会停止panic序列，
+	// 		在一个延迟执行的函数（而不是由它调用的任何函数）内部执行 recover 调用会停止 panic 序列，
 	// 		通过恢复正常的执行并检索传递给panic调用的错误值。如果在延迟函数外部调用recover，则不会停止.
+	// 		如果在没有 panic 发生或者 recover() 在非 defer 语句中调用，它将返回 nil。
+	// 		因此 recover 的返回值可以用来确定 goroutine 是否发生了 panic。
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from panic:", r)
+			fmt.Println("You can doing clean here.")
+		}
+	}()
+	panic("Something wrong message!")
+
 }
