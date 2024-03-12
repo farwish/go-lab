@@ -61,11 +61,17 @@ struct-tag.go
 ## 切片
 slice.go
 
-## 范围
-range.go
+slice-vs-php-index-array.go
 
 ## Map集合
 map.go
+
+map-vs-php-assoc-array.go
+
+    slice 和 map 两个特性加起来就相当于 php 的 array.
+
+## 范围
+range.go
 
 ## 接口
 interface.go
