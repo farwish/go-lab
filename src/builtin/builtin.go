@@ -32,9 +32,10 @@ func main() {
 	// 		适用于 Array, Pointer to array, Slice, String, Channel
 	// cap(v Type) int
 	// 		对于 Array, Pointer to array 含义和 len()相同, Slice 指可以达到的最大长度, Channel 指缓冲区的容量
-	// make() 分配和初始化这些类型的对象, slice, map, or chan (only).
+	// make(t Type, size ...IntegerType) Type 
+	// 			分配和初始化这些类型的对象, slice, map, or chan (only).
 	// 			make初始化 slice 时, size指定长度，可提供第二个参数指定容量、且必须不小于长度
-	// 			make初始化 map 可省略size，见 builtin.go 注释
+	// 			make初始化 map,可省略size、则会分配一个较小的起始大小。见 builtin.go 注释
 	// 			make初始化 channel,size为0或者忽略时，则通道是无缓冲的。 
 	m := make(map[string]int)  
 	v := reflect.ValueOf(m)
@@ -152,6 +153,17 @@ func main() {
 	} else {
 		fmt.Println("testerr is not ErrUnsupported")
 	}
+	// errors作为返回值
+	testfunc := func (s string) (int, error) {
+		if s == "test" {
+			return 1, nil
+		}
+		return 0, testerr
+	}
+	t1, err1 := testfunc("test")
+	t2, err2 := testfunc("other")
+	fmt.Println(t1, err1)	// 1 <nil>
+	fmt.Println(t2, err2)	// 0 Test error
 
 	fmt.Println("-------------------------------")
 
