@@ -4,6 +4,5 @@
 bin/*
 src/github.com/
 !src/github.com/farwish
-pkg/
 go.sum
 .idea/
