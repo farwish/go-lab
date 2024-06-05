@@ -34,19 +34,6 @@ func main() {
 	}
 	defer listener.Close()
 
-	for {
-		conn, err := listener.Accept()
-		if err != nil {
-			log.Printf("Error accepting connection: %v", err)
-			continue
-		}
-		log.Println("---Accepted---")
-
-		// 每个连接在一个单独的goroutine中处理，以实现并发
-		go func(conn net.Conn) {
-			defer conn.Close()
-			log.Printf("Accepted new connection from %s", conn.RemoteAddr().String())
-			rpc.ServeConn(conn)
-		}(conn)
-	}
+	// see: $GOROOT/src/net/rpc/server_test.go
+	rpc.Accept(listener)
 }
