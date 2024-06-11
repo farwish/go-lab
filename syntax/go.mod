@@ -1,3 +1,3 @@
-module /home/wc/go-lab/go-syntax
+module github.com/farwish/go-lab/syntax
 
 go 1.12
