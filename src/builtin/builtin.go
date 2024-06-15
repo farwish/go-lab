@@ -54,6 +54,14 @@ func main() {
 
 	fmt.Println("-------------------------------")
 
+	// func max[T cmp.Ordered](x T, y ...T) T
+	// func min[T cmp.Ordered](x T, y ...T) T
+	// 		max 函数用于返回一组固定数量参数中的最大值。这些参数的类型必须是支持排序的类型（[cmp.Ordered]类型）。至少需要一个参数。
+	// 		如果参数类型是浮点数，且其中任何一个参数是NaN（非数值），那么max函数将返回NaN。
+	// 		注意: max 和 min 函数的定义是泛型语法，需要 go1.18以上版本。
+	fmt.Println(max(1, 2, 3, 4, 5))		// 5
+	fmt.Println(min(1, 2, 3, 4, 5))     // 1
+
 	// new(Type) *Type
 	// 		内置函数，用于分配内存。适用于任何类型Type,然后返回一个指向新分配内存的指针
 	// 		它的第一个参数是一个类型，而不是一个值，返回的值是指向该类型的新分配的零值的指针。
@@ -137,6 +145,13 @@ func main() {
 	fmt.Println(ok)		// false,  当通道为空且已关闭时 ok将被设置为false。
 
 	fmt.Println("-------------------------------")
+
+	// print 和 println 更适合快速调试或简单的错误输出，而 fmt.Print() 和 fmt.Println() 提供了更强大、灵活的文本格式化功能，适用于大部分的程序输出场景。
+	// 是内建函数，不需要导入任何包即可使用，设计初衷更偏向于底层和系统级的简单输出，适合非常基础的调试需求。
+	// func print(args ...Type)
+	// func println(args ...Type)
+	print("----------------")
+	println("---------------")
 
 	// errors.go
 	// 	errors.New 该函数名为New，它返回一个格式化为给定文本的错误值。即使文本相同，每次调用New也会返回一个不同的错误值。
