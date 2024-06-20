@@ -35,7 +35,14 @@ func main() {
 
 	r, b := os.LookupEnv("HOME")
 	fmt.Println(r, b)	// C:\Users\Administrator  true
-
 	r2, b2 := os.LookupEnv("HOME2")
 	fmt.Println(r2, b2)	//  false
+
+	os.Setenv("HOME3", "C:\\Users\\Administrator")
+	r3, b3 := os.LookupEnv("HOME3")
+	fmt.Println(r3, b3)	// C:\Users\Administrator  true
+
+	os.Unsetenv("HOME3")
+	r4, b4 := os.LookupEnv("HOME3")
+	fmt.Println(r4, b4) // false
 }
