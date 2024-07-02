@@ -1,8 +1,9 @@
 package main
 
 import (
-    "fmt"
-    "unsafe"
+	"fmt"
+	"slices"
+	"unsafe"
 )
 
 // 与数组的区别：
@@ -70,6 +71,9 @@ func main() {
     fmt.Println("After copy:")
     // len=3, cap=6, slice=[2 4 6]
     printSlice(ssDouble)
+
+    // Go1.22: slices.Concat 返回包含两个切片内容的新切片。
+    printSlice(slices.Concat(ssDouble, sss))
 }
 
 // 长度和容量

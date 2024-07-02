@@ -17,4 +17,20 @@ func main() {
 	str2 := "hello"
 	result := strings.EqualFold(str1, str2)
 	fmt.Println(result) // Output: true
+
+	
+	// Go1.18: 新增 strings.Cut(s, sep)
+	s := "Hello,, World!"
+	sep := ","
+
+	before, after, found := strings.Cut(s, sep)
+	fmt.Println("Before:", before)	// Before: Hello
+	fmt.Println("After:", after)    // After: , World!
+	fmt.Println("Found:", found)   	// Found: true
+
+	s = "NoSeparatorHere"
+	before, after, found = strings.Cut(s, ",")
+	fmt.Println("Before:", before)	// Before: NoSeparatorHere
+	fmt.Println("After:", after)	// After: 
+	fmt.Println("Found:", found)	// Found: false
 }

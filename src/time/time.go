@@ -21,4 +21,9 @@ func main() {
 	println(t.Date())    					// 2024511
 	println(t.Format("2006-01-02"))			// 2024-05-11
 	println(t.Format("2006-01-02 15:04:05"))// 2024-05-11 19:52:51
+
+	
+	println(t.Location().String())					// Local
+	loc, _ := time.LoadLocation("Asia/Shanghai")	// Asia/Shanghai
+	println(loc.String())
 }

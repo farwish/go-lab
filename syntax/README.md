@@ -88,3 +88,8 @@ goroutine-producer-consumer.go
 
 T.go
 
+## CGO
+
+cgo_contain_code.go
+
+cgo_contain_file.go

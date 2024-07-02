@@ -1,1 +1,6 @@
 binary/*
+
+# CGO middle files
+*.o
+*.a
+
