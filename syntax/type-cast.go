@@ -1,8 +1,8 @@
 package main
 
 import (
-    "fmt"
-    "strconv"
+	"fmt"
+	"strconv"
 )
 
 func main() {
