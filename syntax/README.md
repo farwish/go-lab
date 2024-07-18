@@ -34,9 +34,8 @@ const.go
 
     select 
 
+switch.go
 select.go
-
-chan.go
 
 ## 循环与嵌套循环
 loop.go
@@ -49,6 +48,8 @@ array.go
 
 ## 通道(channel)
 chan.go
+
+chan_with_for_select.go
 
 ## 指针
 pointer.go
