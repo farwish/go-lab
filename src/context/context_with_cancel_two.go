@@ -23,19 +23,22 @@ func main() {
 	go worker1(childCtx)
 	go worker2(ctx)
 
+	time.Sleep(1 * time.Second) // 模拟耗时
 	// 取消根上下文，这将导致所有衍生的子上下文也被取消
 	cancel()
 
 	// 主函数阻塞，等待工作协程结束，观察输出。
-	time.Sleep(3 * time.Millisecond)
+	time.Sleep(3 * time.Second)
 }
 
 func worker1(ctx context.Context) {
+	fmt.Println("into worker1")
 	<-ctx.Done()
 	fmt.Println("Worker1 received cancellation signal.")
 }
 
 func worker2(ctx context.Context) {
+	fmt.Println("into worker2")
 	<-ctx.Done()
 	fmt.Println("Worker2 received cancellation signal.")
 }
