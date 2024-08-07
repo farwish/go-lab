@@ -25,7 +25,6 @@ func (b *B) Start() error {
 	return nil
 }
 
-
 // Provision sets up the module.
 func (g *B) Provision(ctx caddy.Context) error {
 	// TODO: set up the module

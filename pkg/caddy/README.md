@@ -20,3 +20,35 @@ Knowledge see `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` annot
 ```
 
 This `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native caddy with standard module plugged in.
+
+
+---
+
+
+Other important resources:
+
+## Install
+
+https://github.com/caddyserver/caddy/?tab=readme-ov-file#install
+
+## for Development
+
+https://github.com/caddyserver/caddy/?tab=readme-ov-file#for-development
+
+## Architecture
+
+https://caddyserver.com/docs/architecture
+
+## Extending Caddy (module)
+
+https://caddyserver.com/docs/extending-caddy
+
+## Admin API
+
+https://caddyserver.com/docs/api
+
+## Config Adapters
+
+(The Caddyfile is a built-in config adapter)
+
+https://caddyserver.com/docs/config-adapters

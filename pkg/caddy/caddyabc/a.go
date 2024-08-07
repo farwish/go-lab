@@ -5,7 +5,7 @@ import (
 )
 
 func init() {
-	caddy.Log().Info("init() caddyabc")
+	caddy.Log().Info("begin caddyabc init()")
 	caddy.RegisterModule(A{})
 	caddy.RegisterModule(B{})
 }
