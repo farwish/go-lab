@@ -21,6 +21,43 @@ Knowledge see `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` annot
 
 This `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native caddy with standard module plugged in.
 
+---
+
+## Cmd
+
+1 To see all available commands:
+`go run main.go`
+
+
+2 Starts the Caddy process and blocks indefinitely:
+`go run main.go run [-c <path> [-a <name>]] [--envfile <path>] [-e] [-r] [-w] [--pidfile <file>] [-h]`
+实现见：cmd/commandfuncs.go:cmdRun()
+
+```
+Usage:
+  caddy run [--config <path> [--adapter <name>]] [--envfile <path>] [--environ] [--resume] [--watch] [--pidfile <file>] [flags]
+
+Flags:
+  -a, --adapter string    Name of config adapter to apply
+  -c, --config string     Configuration file
+      --envfile strings   Environment file(s) to load
+  -e, --environ           Print environment
+  -h, --help              help for run
+      --pidfile string    Path of file to which to write process ID
+      --pingback string   Echo confirmation bytes to this address on success
+  -r, --resume            Use saved config, if any (and prefer over --config file)
+  -w, --watch             Watch config file for changes and reload it automatically
+```
+
+Caddy Windows环境变量示意：
+`go run main.go run -e`
+
+  caddy.HomeDir=C:\Users\Administrator
+  caddy.AppDataDir=C:\Users\Administrator\AppData\Roaming\Caddy
+  caddy.AppConfigDir=C:\Users\Administrator\AppData\Roaming\Caddy
+  caddy.ConfigAutosavePath=C:\Users\Administrator\AppData\Roaming\Caddy\autosave.json
+  caddy.Version=(devel)
+
 
 ---
 
