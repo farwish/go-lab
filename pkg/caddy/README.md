@@ -26,11 +26,14 @@ This `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native cadd
 ## Cmd
 
 1 To see all available commands:
+
 `go run main.go`
 
 
 2 Starts the Caddy process and blocks indefinitely:
+
 `go run main.go run [-c <path> [-a <name>]] [--envfile <path>] [-e] [-r] [-w] [--pidfile <file>] [-h]`
+
 实现见：cmd/commandfuncs.go:cmdRun()
 
 ```
@@ -50,14 +53,18 @@ Flags:
 ```
 
 Caddy Windows环境变量示意：
+
 `go run main.go run -e`
 
   caddy.HomeDir=C:\Users\Administrator
-  caddy.AppDataDir=C:\Users\Administrator\AppData\Roaming\Caddy
-  caddy.AppConfigDir=C:\Users\Administrator\AppData\Roaming\Caddy
-  caddy.ConfigAutosavePath=C:\Users\Administrator\AppData\Roaming\Caddy\autosave.json
-  caddy.Version=(devel)
 
+  caddy.AppDataDir=C:\Users\Administrator\AppData\Roaming\Caddy
+
+  caddy.AppConfigDir=C:\Users\Administrator\AppData\Roaming\Caddy
+
+  caddy.ConfigAutosavePath=C:\Users\Administrator\AppData\Roaming\Caddy\autosave.json
+
+  caddy.Version=(devel)
 
 ---
 
