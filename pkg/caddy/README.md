@@ -1,5 +1,7 @@
 # custom caddy
 
+## How to custom caddy
+
 This is a custom caddy, with ourselves' module plugged in.
 
 ```
@@ -23,7 +25,7 @@ This `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native cadd
 
 ---
 
-## Cmd
+## Cmd detail explain
 
 1 To see all available commands:
 
@@ -68,30 +70,49 @@ Caddy Windows环境变量示意：
 
 ---
 
+## Caddy source-code read
 
-Other important resources:
+1. First, Clone `github.com/farwish/caddy-printcode`
 
-## Install
+2. Second, Edit ourselves `cmd/caddy/caddyfile`
+
+```
+vi cmd/caddy/caddyfile
+```
+
+```
+http://localhost:8888 {
+  reverse_proxy
+}
+```
+
+3. Third, Test code by `go run main.go run` to see output print.
+
+---
+
+## Caddy relate resources:
+
+#### Install
 
 https://github.com/caddyserver/caddy/?tab=readme-ov-file#install
 
-## for Development
+#### for Development
 
 https://github.com/caddyserver/caddy/?tab=readme-ov-file#for-development
 
-## Architecture
+#### Architecture
 
 https://caddyserver.com/docs/architecture
 
-## Extending Caddy (module)
+#### Extending Caddy (module)
 
 https://caddyserver.com/docs/extending-caddy
 
-## Admin API
+#### Admin API
 
 https://caddyserver.com/docs/api
 
-## Config Adapters
+#### Config Adapters
 
 (The Caddyfile is a built-in config adapter)
 
