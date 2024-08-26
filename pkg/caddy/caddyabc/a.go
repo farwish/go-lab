@@ -20,7 +20,7 @@ type A struct {
 func (A) CaddyModule() caddy.ModuleInfo {
 	caddy.Log().Info("into A CaddyModule()")
 	return caddy.ModuleInfo{
-		ID:  "caddy.abc.a",   // namespace is caddy.abc, module_name is a
+		ID:  "abc.caddyabc.a",   // namespace is abc.caddyabc, module_name is a
 		New: func() caddy.Module { return new(A) },
 	}
 }

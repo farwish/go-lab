@@ -72,7 +72,7 @@ Caddy Windows环境变量示意：
 
 ## Caddy source-code read
 
-1. First, Clone `github.com/farwish/caddy-printcode`
+1. First, Clone `github.com/gopher-lego/caddy-printcode`
 
 2. Second, Edit ourselves `cmd/caddy/caddyfile`
 
@@ -81,8 +81,18 @@ vi cmd/caddy/caddyfile
 ```
 
 ```
-http://localhost:8888 {
-  reverse_proxy
+http://localhost:5566 {
+  reverse_proxy 1xx.1xx.62.xx:8080
+}
+
+http://localhost:5567 {
+  file_server {
+    root D:\www\public
+  }
+}
+
+http://localhost:5568 {
+  respond "Hi"
 }
 ```
 
@@ -96,24 +106,47 @@ http://localhost:8888 {
 
 https://github.com/caddyserver/caddy/?tab=readme-ov-file#install
 
-#### for Development
-
-https://github.com/caddyserver/caddy/?tab=readme-ov-file#for-development
-
 #### Architecture
 
 https://caddyserver.com/docs/architecture
+
+#### API
+
+https://caddyserver.com/docs/api
+
+Caddy is configured through an administration endpoint which can be accessed via HTTP using a REST  API.
+You can configure this endpoint in your Caddy config.
+
+	Default address: `localhost:2019`
+
+The default address can be changed by setting the `CADDY_ADMIN` environment variable. 
+
+#### JSON Config Structure
+
+https://caddyserver.com/docs/json/
+
+Caddy config is expressed natively as a JSON document. If you prefer not to work with JSON directly, there are many config adapters available that can convert various inputs into Caddy JSON.
+
+Many parts of this config are extensible through the use of Caddy modules. 
+
+
+#### Config Adapters
+
+https://caddyserver.com/docs/config-adapters
+
+(The Caddyfile is a built-in config adapter)
 
 #### Extending Caddy (module)
 
 https://caddyserver.com/docs/extending-caddy
 
-#### Admin API
+#### for Development
 
-https://caddyserver.com/docs/api
+https://github.com/caddyserver/caddy/?tab=readme-ov-file#for-development
 
-#### Config Adapters
+```
+$ git clone "https://github.com/caddyserver/caddy.git"
+$ cd caddy/cmd/caddy/
+$ go run main.go [command]  # OR `go build`
+```
 
-(The Caddyfile is a built-in config adapter)
-
-https://caddyserver.com/docs/config-adapters
