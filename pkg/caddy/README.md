@@ -81,18 +81,28 @@ vi cmd/caddy/caddyfile
 ```
 
 ```
-http://localhost:5566 {
-  reverse_proxy 1xx.1xx.62.xx:8080
-}
-
 http://localhost:5567 {
   file_server {
-    root D:\www\public
+    root D:\www\xxx
+    browse
   }
 }
 
 http://localhost:5568 {
   respond "Hi"
+}
+
+http://localhost:5566 {
+  reverse_proxy localhost:5567 localhost:5568 {
+    lb_policy random {
+      fallback ip_hash
+    }
+  }
+
+  # Accessing pprof remotely
+  reverse_proxy /debug/pprof/* localhost:2019 {
+    header_up Host {upstream_hostport}
+  }
 }
 ```
 
