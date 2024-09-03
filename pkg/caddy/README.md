@@ -2,15 +2,10 @@
 
 ## How to custom caddy
 
-This is a custom caddy, with ourselves' module plugged in.
+Original entrance file `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native caddy with standard module plugged in.
 
-```
-$ go run main.go list-modules
-```
+How to custom, see annotation on top of that file:
 
-----------------------------------------------------------
-
-Knowledge see `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` annotation.
 ```
 // There is no need to modify the Caddy source code to customize your builds. 
 // You can easily build a custom Caddy with these simple steps:
@@ -21,13 +16,17 @@ Knowledge see `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` annot
 //  4. Run `go install` or `go build` - you now have a custom binary!
 ```
 
-This `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native caddy with standard module plugged in.
+List modules:
 
----
+```
+$ go run main.go list-modules
+```
 
-## Cmd detail explain
+So, current `main.go` in this dir, is our custom caddy, with ourselves' module plugged in.
 
-**1**
+
+## Available commands overview
+
 `$ go run main.go`
 
 ```
@@ -76,11 +75,9 @@ Full documentation is available at:
 https://caddyserver.com/docs/command-line
 ```
 
+## Run caddy
 
-**2**
 `$ go run main.go run [-c <path> [-a <name>]] [--envfile <path>] [-e] [-r] [-w] [--pidfile <file>] [-h]`
-
-实现见：cmd/commandfuncs.go:cmdRun()
 
 ```
 Usage:
@@ -98,8 +95,6 @@ Flags:
   -w, --watch             Watch config file for changes and reload it automatically
 ```
 
-
-
 `$ go run main.go run -e`
 ```
 （Caddy Windows环境变量示意）
@@ -114,10 +109,140 @@ caddy.ConfigAutosavePath=C:\Users\Administrator\AppData\Roaming\Caddy\autosave.j
 
 caddy.Version=(devel)
 ```
-  
+
+## Caddyfile config reload OR adapt
 
 ```
-（caddy 命令行逻辑 rootCmd 概览）
+$ go run main.go reload --config <path> [--adapter <name>] [--address <interface>] [flags]
+/load 更新 Caddyfile 配置生效，reload 命令内部也是请求的 /load 接口。
+
+$ go run main.go adapt --config <path> [--adapter <name>] [--pretty] [--validate] [--envfile <path>] [flags]
+/adapt 将配置适应到 Caddy JSON，而不加载或运行它；如果成功，结果 JSON 文档将在响应主体中返回。
+```
+
+```
+$ curl "http://localhost:2019/load" \
+	-H "Content-Type: text/caddyfile" \
+	--data-binary @Caddyfile
+```
+
+![caddy_API_load](caddy_API_load_view.jpg)
+
+
+
+
+```
+$ curl "http://localhost:2019/adapt" \
+	-H "Content-Type: text/caddyfile" \
+	--data-binary @Caddyfile
+```
+![caddy_API_adapt](caddy_API_adapt_view.jpg)
+
+
+## Caddy SourceCode print 
+
+1. First, Clone `github.com/gopher-lego/caddy-printcode`
+
+2. Second, Edit ourselves `cmd/caddy/caddyfile`
+
+3. Third, Test code by `go run main.go run` to see output print.
+
+```
+$ vi cmd/caddy/caddyfile
+```
+
+```
+http://localhost:5567 {
+  file_server {
+    root D:\www\xxx
+    browse
+  }
+}
+
+http://localhost:5568 {
+  respond "Hi"
+}
+
+http://localhost:5566 {
+  reverse_proxy localhost:5567 localhost:5568 {
+    lb_policy random {
+      fallback ip_hash
+    }
+  }
+
+  # Accessing pprof remotely
+  reverse_proxy /debug/pprof/* localhost:2019 {
+    header_up Host {upstream_hostport}
+  }
+}
+```
+
+
+## Caddy relate resources:
+
+#### Install
+
+https://github.com/caddyserver/caddy/?tab=readme-ov-file#install
+
+
+#### Architecture
+
+https://caddyserver.com/docs/architecture
+
+
+#### API
+
+https://caddyserver.com/docs/api
+
+```
+Caddy is configured through an administration endpoint which can be accessed via HTTP using a REST  API.
+You can configure this endpoint in your Caddy config.
+
+	Default address: `localhost:2019`
+
+The default address can be changed by setting the `CADDY_ADMIN` environment variable.
+```
+
+
+#### JSON Config Structure
+
+https://caddyserver.com/docs/json/
+
+```
+Caddy config is expressed natively as a JSON document. If you prefer not to work with JSON directly, there are many config adapters available that can convert various inputs into Caddy JSON.
+
+Many parts of this config are extensible through the use of Caddy modules. 
+```
+
+#### Config Adapters
+
+https://caddyserver.com/docs/config-adapters
+
+```
+The Caddyfile is a built-in config adapter
+```
+
+
+#### Extending Caddy (module)
+
+https://caddyserver.com/docs/extending-caddy
+
+
+#### for Development
+
+https://github.com/caddyserver/caddy/?tab=readme-ov-file#for-development
+
+```
+$ git clone "https://github.com/caddyserver/caddy.git"
+$ cd caddy/cmd/caddy/
+$ go run main.go [command]  # OR `go build`
+```
+
+
+## Code explain
+
+```
+（命令行逻辑 rootCmd 流程）
 cmd/caddy/main.go
 
 	Caddy入口点，Caddy的功能主要通过模块提供，可以通过在导入语句中添加模块来插入。
@@ -133,7 +258,7 @@ cmd/caddy/main.go
 ```
 
 ```
-（caddy 命令行逻辑 cmdRun 执行流程）
+（命令行逻辑 cmdRun 执行流程）
 cmd/main.go
 	cmd/commands.go
 		cmd/commandfuncs.go
@@ -218,123 +343,3 @@ go run main.go run [-c <path> [-a <name>]] [--envfile <path>] [-e] [-r] [-w] [--
 
 
 ```
-
----
-
-## Caddyfile config reload / adapt
-
-`caddy reload --config <path> [--adapter <name>] [--address <interface>] [flags]`
-
-`caddy adapt --config <path> [--adapter <name>] [--pretty] [--validate] [--envfile <path>] [flags]`
-
-
-**1**
-```
-curl "http://localhost:2019/load" \
-	-H "Content-Type: text/caddyfile" \
-	--data-binary @Caddyfile
-```
-
-![caddy_API_load](caddy_API_load_view.jpg)
-更新Caddyfile配置生效的方法是通过 /load 接口 或 `caddy reload`，两者效果一样，reload 命令内部也是请求的 /load 接口。
-
-**2**
-```
-curl "http://localhost:2019/adapt" \
-	-H "Content-Type: text/caddyfile" \
-	--data-binary @Caddyfile
-```
-![caddy_API_adapt](caddy_API_adapt_view.jpg)
-/adapt 将配置适应到 Caddy JSON，而不加载或运行它。如果成功，结果 JSON 文档将在响应主体中返回。
-
-
-## Caddy source-code read
-
-1. First, Clone `github.com/gopher-lego/caddy-printcode`
-
-2. Second, Edit ourselves `cmd/caddy/caddyfile`
-
-```
-vi cmd/caddy/caddyfile
-```
-
-```
-http://localhost:5567 {
-  file_server {
-    root D:\www\xxx
-    browse
-  }
-}
-
-http://localhost:5568 {
-  respond "Hi"
-}
-
-http://localhost:5566 {
-  reverse_proxy localhost:5567 localhost:5568 {
-    lb_policy random {
-      fallback ip_hash
-    }
-  }
-
-  # Accessing pprof remotely
-  reverse_proxy /debug/pprof/* localhost:2019 {
-    header_up Host {upstream_hostport}
-  }
-}
-```
-
-3. Third, Test code by `go run main.go run` to see output print.
-
----
-
-## Caddy relate resources:
-
-#### Install
-
-https://github.com/caddyserver/caddy/?tab=readme-ov-file#install
-
-#### Architecture
-
-https://caddyserver.com/docs/architecture
-
-#### API
-
-https://caddyserver.com/docs/api
-
-Caddy is configured through an administration endpoint which can be accessed via HTTP using a REST  API.
-You can configure this endpoint in your Caddy config.
-
-	Default address: `localhost:2019`
-
-The default address can be changed by setting the `CADDY_ADMIN` environment variable. 
-
-#### JSON Config Structure
-
-https://caddyserver.com/docs/json/
-
-Caddy config is expressed natively as a JSON document. If you prefer not to work with JSON directly, there are many config adapters available that can convert various inputs into Caddy JSON.
-
-Many parts of this config are extensible through the use of Caddy modules. 
-
-
-#### Config Adapters
-
-https://caddyserver.com/docs/config-adapters
-
-(The Caddyfile is a built-in config adapter)
-
-#### Extending Caddy (module)
-
-https://caddyserver.com/docs/extending-caddy
-
-#### for Development
-
-https://github.com/caddyserver/caddy/?tab=readme-ov-file#for-development
-
-```
-$ git clone "https://github.com/caddyserver/caddy.git"
-$ cd caddy/cmd/caddy/
-$ go run main.go [command]  # OR `go build`
-```
-
