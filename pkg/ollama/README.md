@@ -1,6 +1,10 @@
 
 ## Ollama development.
 
+https://github.com/ollama/ollama/blob/main/docs/development.md
+
+---
+
 #### Get the required libraries and build the native LLM code:
 
 ```bash
@@ -41,7 +45,27 @@ Flags:
 Use "ollama [command] --help" for more information about a command.
 ```
 
-#### Serve & Run ollama (Or build the binary for run):
+#### Serve in docker (Without llama.cpp local generate)
+
+```
+# Serve, than other command will not show "Error: could not connect to ollama app, is it running?"
+$ docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
+
+# Serve with --privileged (to fix permission denied error on Windows)
+$ docker run --privileged -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
+
+# Serve with OLLAMA_ORIGINS=* (to fix CORS error from remote)
+$ docker run -e OLLAMA_ORIGINS=* -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama -e OLLAMA_ORIGINS=*
+
+# Test running
+$ curl http://localhost:11434  # Ollama is running
+
+# List models (2 ways)
+$ go run main.go run qwen2:0.5b                         # With codebase
+$ docker exec -it ollama_deploy ollama run qwen2:0.5b   # Without codebase
+```
+
+#### Serve & Run ollama (After llama.cpp local generate):
 
 ```bash
 $ go run main.go [serve]
@@ -77,7 +101,7 @@ Modelfile: details see docs/modelfile.md
 ```
 FROM qwen2:0.5b
 
-SYSTEM """<你是一位名字叫Jack的编程助手>"""
+SYSTEM "你是一位名字叫Jack的编程助手>"
 ```
 ![ollama_show_model_created](ollama_show_model_created.jpg)
 
@@ -94,6 +118,6 @@ Execute the command in your own (local) terminal to get the key.
 ![ollama_push_model](ollama_push_model.jpg)
 
 
-#### More detail
 
-https://github.com/ollama/ollama/blob/main/docs/development.md
+
+
