@@ -5,16 +5,7 @@ https://github.com/ollama/ollama/blob/main/docs/development.md
 
 ---
 
-#### Get the required libraries and build the native LLM code:
-
-```bash
-$ go generate ./...
-```
-
-![go_generate_start](ollama_go_generate_start.jpg)
-![go_generate_finish](ollama_go_generate_finish.jpg)
-
-#### Available commands overview
+#### Commands overview
 
 ```bash
 $ go run main.go
@@ -45,7 +36,24 @@ Flags:
 Use "ollama [command] --help" for more information about a command.
 ```
 
-#### Serve in docker (Without llama.cpp local generate)
+#### Get required libraries & Build Native LLM code:
+
+```bash
+$ go generate ./...
+```
+
+![go_generate_start](ollama_go_generate_start.jpg)
+![go_generate_finish](ollama_go_generate_finish.jpg)
+
+
+#### Serve ollama (After llama.cpp local generate):
+
+```bash
+$ go run main.go [serve]
+```
+![go_run_main.go_serve](ollama_go_run_main.go_serve.jpg)
+
+#### Serve in docker (Without llama.cpp local generate；to make LlamaServer available)
 
 ```
 # Serve, than other command will not show "Error: could not connect to ollama app, is it running?"
@@ -65,15 +73,14 @@ $ go run main.go run qwen2:0.5b                         # With codebase
 $ docker exec -it ollama_deploy ollama run qwen2:0.5b   # Without codebase
 ```
 
-#### Serve & Run ollama (After llama.cpp local generate):
-
-```bash
-$ go run main.go [serve]
-```
-![go_run_main.go_serve](ollama_go_run_main.go_serve.jpg)
+#### Use ollama (When LlamaServer available):
 
 ```bash
 $ go run main.go [list|ps]
+```
+
+```bash
+$ go run main.go [stop] [gemma2:2b]
 ```
 
 ```bash
@@ -100,8 +107,10 @@ $ go run main.go [create] ModelName -f Modelfile -q q4_0
 Modelfile: details see docs/modelfile.md
 ```
 FROM qwen2:0.5b
-
-SYSTEM "你是一位名字叫Jack的编程助手>"
+PARAMETER temperature 1
+SYSTEM """
+你是一位名字叫Jack的编程助手
+"""
 ```
 ![ollama_show_model_created](ollama_show_model_created.jpg)
 
@@ -116,6 +125,26 @@ Execute the command in your own (local) terminal to get the key.
 ```
 
 ![ollama_push_model](ollama_push_model.jpg)
+
+
+#### REST API in ollama
+
+Code is *server/routes.go*
+Docs is *docs/api.md*
+
+Special functionality:
+```
+1. steam param, like `{ "stream": true }` or `{ "stream": false }`
+
+2. options param, like `{ "options": {"seed":123, "temperature": 0.2} }`, same of `parameter` in modelfile. 
+
+3. image param, for multimodal, like `{ "image": ["this_is_image_base64_string"] }`
+
+4. tools param, see docs/api.md
+```
+
+
+
 
 
 
