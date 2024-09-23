@@ -27,3 +27,9 @@ Example:
 $ go run cmd/main.go get qwen2.5:1.5b
 ```
 ![omdd_get](omdd_get.jpg)
+
+
+Thought:
+
+*This project author should has read the ollama api implement codes, because ollama pull modal logic has `server/download.go: downloadBlob()`
+So the source core code is valueable for every hacker.*
