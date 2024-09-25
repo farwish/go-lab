@@ -3,9 +3,7 @@
 
 https://github.com/ollama/ollama/blob/main/docs/development.md
 
----
-
-### Commands overview
+## Commands overview
 
 ```bash
 $ go run main.go
@@ -36,7 +34,7 @@ Flags:
 Use "ollama [command] --help" for more information about a command.
 ```
 
-### Get required libraries & Build Native LLM code:
+## Get required libraries & Build Native LLM code:
 
 ```bash
 $ go generate ./...
@@ -46,14 +44,14 @@ $ go generate ./...
 ![go_generate_finish](ollama_go_generate_finish.jpg)
 
 
-### Serve ollama (After llama.cpp local generate):
+## Serve ollama (After llama.cpp local generate):
 
 ```bash
 $ go run main.go [serve]
 ```
 ![go_run_main.go_serve](ollama_go_run_main.go_serve.jpg)
 
-### Serve in docker (Without llama.cpp local generate；to make LlamaServer available)
+## Serve in docker (Without llama.cpp local generate；to make LlamaServer available)
 
 ```
 # Serve, than other command will not show "Error: could not connect to ollama app, is it running?"
@@ -63,7 +61,7 @@ $ docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy olla
 $ docker run --privileged -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
 
 # Serve with OLLAMA_ORIGINS=* (to fix CORS error from remote)
-$ docker run -e OLLAMA_ORIGINS=* -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama -e OLLAMA_ORIGINS=*
+$ docker run -e OLLAMA_ORIGINS=* -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
 
 # Test running
 $ curl http://localhost:11434  # Ollama is running
@@ -73,7 +71,7 @@ $ go run main.go run qwen2:0.5b                         # With codebase
 $ docker exec -it ollama_deploy ollama run qwen2:0.5b   # Without codebase
 ```
 
-### Use ollama (When LlamaServer available):
+## Use ollama (When LlamaServer available):
 
 ```bash
 $ go run main.go [list|ps]
@@ -127,7 +125,7 @@ Execute the command in your own (local) terminal to get the key.
 ![ollama_push_model](ollama_push_model.jpg)
 
 
-### REST API in ollama
+## REST API in ollama
 
 Code is *server/routes.go*
 Docs is *docs/api.md* contains advanced detail.
