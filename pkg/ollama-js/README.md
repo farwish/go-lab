@@ -7,7 +7,7 @@ Ollama JavaScript library: [ollama-js](https://github.com/ollama/ollama-js)
 ```bash
 $ yarn                        # Install project dependencies
 $ yarn global add typescript  # Install TypeScript, Than `echo $PATH` to confirm PATH contains the `yarn global bin` path
-$ tsc tools.ts && node tools.js # Build and Run to see results
+$ tsc examples/tools/tools.ts && node examples/tools/tools.js # Build and Run to see results
 ```
 
 `tools.ts` flow explain:

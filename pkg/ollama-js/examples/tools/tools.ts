@@ -86,4 +86,4 @@ async function run(model: string) {
     console.log(finalResponse.message.content);
 }
 
-run('qwen2.5:0.5b').catch(error => console.error("An error occurred:", error));
+run('qwen2.5:1.5b').catch(error => console.error("An error occurred:", error));

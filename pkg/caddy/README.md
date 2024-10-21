@@ -1,33 +1,48 @@
 # custom caddy
 
-## How to custom caddy
+## Caddy source code print(debug/hack) 
 
-Original entrance file `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native caddy with standard module plugged in.
+1. First, Clone `github.com/gopher-lego/caddy-printcode`
 
-How to custom, see annotation on top of that file:
+2. Second, Edit ourselves `cd cmd/caddy/ && vi cmd/caddy/caddyfile`
 
-```
-// There is no need to modify the Caddy source code to customize your builds. 
-// You can easily build a custom Caddy with these simple steps:
+3. Third, Test code by `go run main.go run` to see output print.
 
-//  1. Copy `cmd/caddy/main.go` into a new folder.
-//  2. Edit the imports to include the modules you want plugged in
-//  3. Run `go mod init caddy`. (`go mod tidy`)
-//  4. Run `go install` or `go build` - you now have a custom binary!
+```bash
+$ vi cmd/caddy/caddyfile
 ```
 
-
-*So, current `main.go` in this dir is a (custom)caddy with ourselves' module plugged in.*
-
-*Can use caddy cmd directly, like list-modules:*
-
 ```
-$ go run main.go list-modules
+http://localhost:5567 {
+  file_server {
+    root D:\www\xxx
+    browse
+  }
+}
+
+http://localhost:5568 {
+  respond "Hi"
+}
+
+http://localhost:5566 {
+  reverse_proxy localhost:5567 localhost:5568 {
+    lb_policy random {
+      fallback ip_hash
+    }
+  }
+
+  # Accessing pprof remotely
+  reverse_proxy /debug/pprof/* localhost:2019 {
+    header_up Host {upstream_hostport}
+  }
+}
 ```
 
 ## Available commands overview
 
-`$ go run main.go`
+```bash
+$ go run main.go
+```
 
 ```
 Usage:
@@ -82,7 +97,7 @@ $ go run main.go run    # without -c flag, current directory Caddyfile is used
 ```
 
 *See more flags:*
-```
+```bash
 $ go run main.go run -h
 ```
 
@@ -120,7 +135,7 @@ caddy.ConfigAutosavePath=C:\Users\Administrator\AppData\Roaming\Caddy\autosave.j
 caddy.Version=(devel)
 ```
 
-## Caddyfile config reload Or adapt
+## Reload Or Adapt config file - Caddyfile
 
 *Cmd way:*
 
@@ -153,42 +168,31 @@ $ curl "http://localhost:2019/adapt" \
 *Read docs first maybe easier than direct into dirty code.* [bottom docs](#caddy-docs-resources)
 *When you want to know more core, than you can read the source code later.*
 
-## Caddy source code print(debug/hack) 
 
-1. First, Clone `github.com/gopher-lego/caddy-printcode`
 
-2. Second, Edit ourselves `cmd/caddy/caddyfile`
 
-3. Third, Test code by `go run main.go run` to see output print.
+## How to custom caddy
 
-```
-$ vi cmd/caddy/caddyfile
-```
+Original entrance file `github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go` is native caddy with standard module plugged in.
+
+How to custom, see annotation on top of that file:
 
 ```
-http://localhost:5567 {
-  file_server {
-    root D:\www\xxx
-    browse
-  }
-}
+// There is no need to modify the Caddy source code to customize your builds. 
+// You can easily build a custom Caddy with these simple steps:
 
-http://localhost:5568 {
-  respond "Hi"
-}
+//  1. Copy `cmd/caddy/main.go` into a new folder.
+//  2. Edit the imports to include the modules you want plugged in
+//  3. Run `go mod init caddy`. (`go mod tidy`)
+//  4. Run `go install` or `go build` - you now have a custom binary!
+```
 
-http://localhost:5566 {
-  reverse_proxy localhost:5567 localhost:5568 {
-    lb_policy random {
-      fallback ip_hash
-    }
-  }
+*So, current `main.go` in this dir is a (custom)caddy with ourselves' module plugged in.*
 
-  # Accessing pprof remotely
-  reverse_proxy /debug/pprof/* localhost:2019 {
-    header_up Host {upstream_hostport}
-  }
-}
+*Can use caddy cmd directly, like list-modules:*
+
+```bash
+$ go run main.go list-modules
 ```
 
 ## Code explain
@@ -297,7 +301,7 @@ go run main.go run [-c <path> [-a <name>]] [--envfile <path>] [-e] [-r] [-w] [--
 
 ```
 
-## Caddy docs resources:
+## Docs resources:
 
 #### Install
 
@@ -351,7 +355,7 @@ https://caddyserver.com/docs/extending-caddy
 
 https://github.com/caddyserver/caddy/?tab=readme-ov-file#for-development
 
-```
+```bash
 $ git clone "https://github.com/caddyserver/caddy.git"
 $ cd caddy/cmd/caddy/
 $ go run main.go [command]  # OR `go build`
