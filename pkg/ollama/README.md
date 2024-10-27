@@ -38,13 +38,13 @@ Use "ollama [command] --help" for more information about a command.
 
 ```
 # Serve, than other command will not show "Error: could not connect to ollama app, is it running?"
-$ docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
-
-# Serve with --privileged (to fix permission denied error on Windows)
-$ docker run --privileged -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
+$ docker run -d -v /home/ubuntu/.ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
 
 # Serve with OLLAMA_ORIGINS=* (to fix CORS error from remote)
-$ docker run -e OLLAMA_ORIGINS=* -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
+$ docker run -e OLLAMA_ORIGINS=* -d -v /home/ubuntu/.ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
+
+# Serve with --privileged (to fix permission denied error on Windows), here `-v ollama:` is volume.
+$ docker run --privileged -d -v ollama:/root/.ollama -p 11434:11434 --name ollama_deploy ollama/ollama
 
 # Test running
 $ curl http://localhost:11434  # Ollama is running
@@ -52,6 +52,30 @@ $ curl http://localhost:11434  # Ollama is running
 # List models (2 ways)
 $ go run main.go run qwen2:0.5b                         # With codebase
 $ docker exec -it ollama_deploy ollama run qwen2:0.5b   # Without codebase
+```
+
+### docker basic knowledge
+
+```
+1.
+Install see Docs: https://docs.docker.com/engine/install/ubuntu/
+Download: https://developer.aliyun.com/mirror/docker-ce/
+
+2.
+$ [sudo useradd -d /home/ubuntu -s /bin/bash ubuntu]
+$ sudo usermod -aG docker ubuntu
+
+3.
+$ sudo vi /etc/docker/daemon.json
+{
+  "registry-mirrors": [
+    "https://docker.1panel.live/",
+    "https://hub.rat.dev"
+  ],
+}
+
+4.
+$ sudo systemctl restart docker
 ```
 
 ## Use ollama cmd (When LlamaServer available):

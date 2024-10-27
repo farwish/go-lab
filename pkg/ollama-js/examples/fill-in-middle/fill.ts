@@ -1,7 +1,7 @@
 import ollama from 'ollama'
 
 const response = await ollama.generate({
-  model: 'deepseek-coder-v2',
+  model: 'yi-coder:1.5b',
   prompt: `def add(`,
   suffix: `return c`,
 })
