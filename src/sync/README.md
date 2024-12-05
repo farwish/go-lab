@@ -5,7 +5,7 @@
 Go 语言标准库中的 sync 包提供了多种同步原语，用于控制多个goroutine间的协作和同步。
 以下是sync包中最常用的一些类型及其基本用法：
 
-Mutex（互斥锁）
+### Mutex（互斥锁）
 
 ```go
 import "sync"
@@ -25,7 +25,7 @@ defer mu.Unlock()
 // 修改共享资源
 ```
 
-RWMutex（读写锁）
+### RWMutex（读写锁）
 
 ```go
 import "sync"
@@ -43,7 +43,7 @@ rwMutex.Lock()
 rwMutex.Unlock()
 ```
 
-Once
+### Once
 
 ```go
 import "sync"
@@ -65,7 +65,7 @@ func doSomething() {
 }
 ```
 
-WaitGroup
+### WaitGroup
 
 ```go
 import "sync"
@@ -89,7 +89,7 @@ func main() {
 }
 ```
 
-Cond
+### Cond
 
 ```go
 import "sync"
@@ -114,7 +114,7 @@ func notifier(cond *sync.Cond) {
 }
 ```
 
-Pool
+### Pool
 
 sync.Pool 是 Go 语言的标准库提供的一种轻量级对象池实现，主要用于缓存和重用临时对象，从而减少内存分配和垃圾回收（GC）的压力。其设计目标是帮助开发者在短期内复用已有的对象而不是频繁地创建和销毁它们，尤其是在那些生命周期较短且创建成本较高的场景下。
 

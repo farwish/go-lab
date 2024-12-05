@@ -50,10 +50,14 @@ func main() {
 
 	// 避免死锁方式1：使用goroutine并发执行
 	// 通过 go 语句定义发送操作的方程在另一个协程并发运行，chan读取没有数据时会阻塞等待，从而能够解决死锁问题。
+	// 由于 goroutine 的调度是不确定的，因此无法保证 c2 <- 2 一定会在 j := <-c2 之前执行。但是，根据 Go 语言的通道机制，j := <-c2 会阻塞，直到 c2 中有值可用。
 	go func() {
+		fmt.Println("Start push to channel 2")
 		c2 <- 2
 	}()
-
+	
+	fmt.Println("Start read from channel 2") // 需要注意的是，Start push to channel 2 和 Start read from channel 2 的输出顺序是不确定的，因为 goroutine 的调度是不可预测的。
+	
 	j := <-c2
 
 	fmt.Println("Receive from channel 2: ", j)
