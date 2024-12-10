@@ -29,8 +29,6 @@ https://github.com/1Panel-dev/installer/blob/main/1pctl
 - uninstall 命令是停止及禁止自启动 1panel.service, 并删掉了 /opt/1panel /usr/local/bin/{1pctl,1panel} /etc/systemd/system/1panel.service
 - user-info, listen-ip, version, update, reset, restore 命令是调用的构建好的 1panel 命令。
 
-其余调用的 1panel cmd包的命令。
-
 ```bash
 $ 1pctl cli
 
