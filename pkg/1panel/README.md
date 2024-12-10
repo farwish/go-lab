@@ -21,7 +21,7 @@ $ go get
 $ go run main.go
 ```
 
-## 1pctl
+## 1pctl cli
 
 https://github.com/1Panel-dev/installer/blob/main/1pctl
 
@@ -30,7 +30,7 @@ https://github.com/1Panel-dev/installer/blob/main/1pctl
 - user-info, listen-ip, version, update, reset, restore 命令是调用的构建好的 1panel 命令。
 
 ```bash
-$ 1pctl cli
+$ 1pctl
 
 1Panel 控制脚本
 
